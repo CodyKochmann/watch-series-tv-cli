@@ -3,7 +3,7 @@
 # @Author: Cody Kochmann
 # @Date:   2015-06-28 14:22:20
 # @Last Modified by:   codykochmann
-# @Last Modified time: 2015-06-29 09:58:23
+# @Last Modified time: 2015-06-29 10:14:04
 
 def find_all_matches(input_string,pattern):
   import re
@@ -35,7 +35,7 @@ for i in saved_shows:
 saved_shows=t
 del t
 
-print "your saved shows:\n  %s" % ('  \n'.join(saved_shows))
+print "your show history:\n  %s" % ('  \n'.join(saved_shows))
 show_name_in_url=raw_input("what's the name of the show in the watch-series-tv url?\n")
 
 save_show(show_name_in_url)
