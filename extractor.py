@@ -3,7 +3,7 @@
 # @Author: Cody Kochmann
 # @Date:   2015-06-28 14:22:20
 # @Last Modified by:   codykochmann
-# @Last Modified time: 2015-06-28 16:45:05
+# @Last Modified time: 2015-06-29 09:40:25
 
 saved_shows=["silicon_valley"]
 
@@ -64,8 +64,10 @@ def create_episode_object(episode_url):
   output = {
     "episode":episode_url,
     "providers":output,
-    "episode_id":find_all_matches(episode_url, "s[0-9]_e[0-9]{1,2}")[0]
+    "episode_id":find_all_matches(episode_url, "s[0-9]{1,2}_e[0-9]{1,2}")[0]
   }
+  output["episode_number"]=find_all_matches(output["episode_id"].split("_")[1], "[0-9]{1,2}")[0]
+  output["season_number"]=find_all_matches(output["episode_id"].split("_")[0], "[0-9]{1,2}")[0]
   episodes.append(output)
   return [output['episode_id'],"providers found: %s"%(len(output["providers"]))]
 
@@ -79,13 +81,19 @@ for i in episode_links:
   except:
     pass
 
-import json
-database_name=show_name_in_url+".json"
-print "Generating database: %s" % database_name
+def save_local_json_db(database_name="db.json",json_data={}):
+  import json
+  print "Generating database: %s" % database_name
+  with open(database_name,'w') as f:
+    file_output = json.dumps(json_data, sort_keys=True, indent=2, separators=(',', ': '))
+    f.write(file_output)
 
-with open(database_name,'w') as f:
-  file_output = json.dumps(episodes, sort_keys=True, indent=2, separators=(',', ': '))
-  f.write(file_output)
+SAVE_LOCAL_DATABASE=False
+
+if SAVE_LOCAL_DATABASE:
+  # holding this code off for a little later.
+  database_name=show_name_in_url+".json"
+  save_local_json_db(database_name,episodes)
 
 print "process complete."
 
