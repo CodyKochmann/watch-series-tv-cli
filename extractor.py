@@ -3,19 +3,49 @@
 # @Author: Cody Kochmann
 # @Date:   2015-06-28 14:22:20
 # @Last Modified by:   codykochmann
-# @Last Modified time: 2015-06-29 09:40:25
-
-saved_shows=["silicon_valley"]
-
-show_name_in_url=raw_input("what's the name of the show in the watch-series-tv url?\n")
-
-def grep(link):
-    import urllib2
-    return urllib2.urlopen(link).read()
+# @Last Modified time: 2015-06-29 09:58:23
 
 def find_all_matches(input_string,pattern):
   import re
   return re.findall(pattern, input_string)
+
+SAVED_SHOW_IDENTIFIER="$SAVED_SHOW"
+WORKSPACE_FILE='extractor.workspace'
+
+def read_file(path):
+  with open(path,'r') as f:
+    out = f.read()
+    return out
+
+def save_show(show_id):
+  global WORKSPACE_FILE
+  from os import listdir
+  if WORKSPACE_FILE not in listdir("./"):
+    with open(WORKSPACE_FILE,'w') as f:
+      f.write("#this is a workspace file for extractor.py in the watch-series-tv-cli\n")
+
+  if show_id not in read_file(WORKSPACE_FILE):
+    with open('extractor.workspace','a') as f:
+      f.write(SAVED_SHOW_IDENTIFIER + " " + show_id +"\n")
+
+saved_shows = find_all_matches(read_file(WORKSPACE_FILE), "\$SAVED_SHOW\s[a-z_]{1,30}")
+t=[]
+for i in saved_shows:
+  t.append(i.split(" ")[1])
+saved_shows=t
+del t
+
+print "your saved shows:\n  %s" % ('  \n'.join(saved_shows))
+show_name_in_url=raw_input("what's the name of the show in the watch-series-tv url?\n")
+
+save_show(show_name_in_url)
+
+exit()
+def grep(link):
+    import urllib2
+    return urllib2.urlopen(link).read()
+
+
 
 silicon_valley_url = "http://watch-series-tv.to/serie/"+show_name_in_url
 watch_series_url="http://watch-series-tv.to"
