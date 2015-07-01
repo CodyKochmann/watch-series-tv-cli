@@ -3,7 +3,7 @@
 # @Author: Cody Kochmann
 # @Date:   2015-06-28 14:22:20
 # @Last Modified by:   codykochmann
-# @Last Modified time: 2015-07-01 09:30:14
+# @Last Modified time: 2015-07-01 10:51:04
 
 def find_all_matches(input_string,pattern):
   import re
@@ -76,6 +76,23 @@ tmp = []
 for i in episode_links:
   tmp.append(watch_series_url+i)
 episode_links = sorted(tmp)
+
+def announce_episodes(episode_links):
+  seasons = find_all_matches("\n".join(episode_links), "s[0-9]{1,2}")
+  s={}
+  print "Episodes found:"
+  for i in seasons:
+    s[i]=[]
+  for i in s:
+    o=i+":"
+    for x in range(len(find_all_matches("\n".join(episode_links), i))):
+      o+= " "+str(x+1)
+    print(o)
+
+announce_episodes(episode_links)
+
+print "\n".join(episode_links)
+exit()
 
 episodes=[]
 
