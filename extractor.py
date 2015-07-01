@@ -3,7 +3,7 @@
 # @Author: Cody Kochmann
 # @Date:   2015-06-28 14:22:20
 # @Last Modified by:   codykochmann
-# @Last Modified time: 2015-06-29 10:14:04
+# @Last Modified time: 2015-07-01 09:30:14
 
 def find_all_matches(input_string,pattern):
   import re
@@ -40,7 +40,6 @@ show_name_in_url=raw_input("what's the name of the show in the watch-series-tv u
 
 save_show(show_name_in_url)
 
-exit()
 def grep(link):
     import urllib2
     return urllib2.urlopen(link).read()
@@ -135,7 +134,8 @@ for e in episodes:
     if "e"+episode_number in e['episode_id']:
       for p in e['providers']:
         try:
-          print find_all_matches(grep(p['url']), "(http://daclips.in/[a-z0-9]{12})|(http://vodlocker.com/[a-z0-9]{12})")
+          tmp= str(find_all_matches(grep(p['url']), "(http://daclips.in/[a-z0-9]{12})|(http://vodlocker.com/[a-z0-9]{12})"))
+          print find_all_matches(tmp, "http://[a-z\.]{1,20}/[a-z0-9A-Z\.]{1,20}")[0]
         except:
           pass
 
