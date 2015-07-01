@@ -3,7 +3,7 @@
 # @Author: Cody Kochmann
 # @Date:   2015-06-28 14:22:20
 # @Last Modified by:   codykochmann
-# @Last Modified time: 2015-07-01 10:51:04
+# @Last Modified time: 2015-07-01 10:51:57
 
 def find_all_matches(input_string,pattern):
   import re
@@ -91,7 +91,9 @@ def announce_episodes(episode_links):
 
 announce_episodes(episode_links)
 
-print "\n".join(episode_links)
+season_number = raw_input("which season do you need?\n")
+episode_number = raw_input("which episode number?\n")
+
 exit()
 
 episodes=[]
@@ -143,8 +145,6 @@ if SAVE_LOCAL_DATABASE:
 
 print "process complete."
 
-season_number = raw_input("which season do you need?\n")
-episode_number = raw_input("which episode number?\n")
 
 for e in episodes:
   if "s"+season_number in e['episode_id']:
