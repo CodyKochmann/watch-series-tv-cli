@@ -94,7 +94,7 @@ announce_episodes(episode_links)
 season_number = raw_input("which season do you need?\n")
 episode_number = raw_input("which episode number?\n")
 
-exit()
+#exit()
 
 episodes=[]
 
